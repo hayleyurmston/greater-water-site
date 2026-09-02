@@ -526,6 +526,13 @@ document.querySelectorAll('.faq button').forEach(function(btn){
   });
 });
 // (Enquiry form removed for launch - call-only. Revisit form + SMS callback in ~2027.)
+// GA4 phone-click tracking: fires 'click_phone' on any tel: link (uses the existing GA4 tag)
+document.addEventListener('click',function(e){
+  var a=e.target.closest?e.target.closest('a[href^="tel:"]'):null;
+  if(a&&typeof gtag==='function'){
+    gtag('event','click_phone',{link_url:a.getAttribute('href'),link_text:(a.textContent||'').trim().slice(0,100)});
+  }
+},true);
 </script>
 </body>
 </html>
